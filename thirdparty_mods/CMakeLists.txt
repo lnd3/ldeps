@@ -1,55 +1,6 @@
 cmake_minimum_required (VERSION 3.0.2)
 
-############################ External Libs ############################
-
-if(NOT DEFINED TP_jsonxx OR TP_jsonxx)
-############################ jsonxx ############################
-file(GLOB_RECURSE jsonxx_inc ${CMAKE_CURRENT_SOURCE_DIR}/jsonxx/jsonxx/jsonxx.h)
-file(GLOB_RECURSE jsonxx_src ${CMAKE_CURRENT_SOURCE_DIR}/jsonxx/jsonxx/jsonxx.cc)
-
-add_library(jsonxx STATIC ${jsonxx_inc} ${jsonxx_src})
-target_include_directories(jsonxx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/jsonxx)
-set_target_properties(jsonxx PROPERTIES FOLDER "Deps/jsonxx")
-
-target_compile_definitions(jsonxx PUBLIC cxx_std_17)
-if(MSVC)
-	target_compile_options(jsonxx PRIVATE /W1)
-else()
-	target_compile_options(jsonxx PRIVATE -Werror)
-endif()
-endif()
-
-
-if(NOT DEFINED TP_bc7enc OR TP_bc7enc)
-############################ bc7enc ############################
-file(GLOB_RECURSE bc7enc_inc ${CMAKE_CURRENT_SOURCE_DIR}/bc7enc/bc7enc/*.h)
-file(GLOB_RECURSE bc7enc_src ${CMAKE_CURRENT_SOURCE_DIR}/bc7enc/bc7enc/*.c*)
-list(REMOVE_ITEM bc7enc_src ${CMAKE_CURRENT_SOURCE_DIR}/bc7enc/bc7enc/test.cpp)
-
-add_library(bc7enc STATIC ${bc7enc_inc} ${bc7enc_src})
-target_include_directories(bc7enc PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/bc7enc)
-set_target_properties(bc7enc PROPERTIES FOLDER "Deps/bc7enc")
-
-target_compile_definitions(bc7enc PUBLIC cxx_std_17)
-if(MSVC)
-	target_compile_options(bc7enc PRIVATE /W1)
-else()
-	target_compile_options(bc7enc PRIVATE -Werror)
-endif()
-endif()
-
-if(NOT DEFINED TP_various OR TP_various)
-############################ Various ############################
-file(GLOB_RECURSE various_inc ${CMAKE_CURRENT_SOURCE_DIR}/various/include/various/*.h)
-file(GLOB_RECURSE various_src ${CMAKE_CURRENT_SOURCE_DIR}/various/src/*.*)
-add_library(various STATIC ${various_inc} ${various_src})
-target_include_directories(various PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/various/include)
-set_target_properties(various PROPERTIES FOLDER "Deps/various")
-
-target_compile_definitions(various PUBLIC cxx_std_17)
-endif()
-
-if(NOT DEFINED TP_glfw OR TP_glfw)
+if(NOT DEFINED deps_glfw OR deps_glfw)
 ############################ GLFW ############################
 set(BUILD_SHARED_LIBS Off)
 set(GLFW_BUILD_EXAMPLES Off)
@@ -61,61 +12,7 @@ set_target_properties(glfw PROPERTIES FOLDER "Deps/glfw")
 set_target_properties(update_mappings PROPERTIES FOLDER "Deps/glfw")
 endif()
 
-if(NOT DEFINED TP_glad OR TP_glad)
-############################ GLAD ############################
-add_library(glad STATIC 
-	${CMAKE_CURRENT_SOURCE_DIR}/glad/include/glad/glad.h
-	${CMAKE_CURRENT_SOURCE_DIR}/glad/include/KHR/khrplatform.h
-	${CMAKE_CURRENT_SOURCE_DIR}/glad/src/glad.c)
-target_include_directories(glad PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/glad/include)
-set_target_properties(glad PROPERTIES FOLDER "Deps/glad")
-
-target_compile_definitions(glad PUBLIC cxx_std_17)
-if(MSVC)
-	target_compile_options(glad PRIVATE /W2 /WX)
-else()
-	target_compile_options(glad PRIVATE -Werror)
-endif()
-endif()
-
-if(NOT DEFINED TP_curl OR TP_curl)
-############################ CURL ############################
-set(BUILD_SHARED_LIBS False)
-set(BUILD_STATIC_LIBS True)
-set(BUILD_TESTING False)
-#set(CURL_CA_FALLBACK On)
-set(CURL_ENABLE_SSL True)
-set(CURL_USE_SCHANNEL True)
-set(CURL_WINDOWS_SSPI True)
-#set(ENABLE_CURL_DEBUG On)
-#set(ENABLE_DEBUG On)
-#set(ENABLE_UNIX_SOCKETS On)
-set(ENABLE_WEBSOCKETS True)
-set(USE_WIN32_LDAP True)
-add_subdirectory(curl)
-set_target_properties(curl PROPERTIES FOLDER "Deps/curl")
-set_target_properties(curl_uninstall PROPERTIES FOLDER "Deps/curl")
-set_target_properties(libcurl_static PROPERTIES FOLDER "Deps/curl")
-set_target_properties(libcurl_object PROPERTIES FOLDER "Deps/curl")
-set_target_properties(curltool PROPERTIES FOLDER "Deps/curl")
-target_compile_definitions(libcurl_object PUBLIC CURL_ENABLE_SSL USE_WINDOWS_SSPI USE_SCHANNEL)
-endif()
-
-if(NOT DEFINED TP_mongoose OR TP_mongoose)
-############################ Mongoose ############################
-add_library(mongoose STATIC mongoose/mongoose/mongoose.h mongoose/mongoose/mongoose.c)
-target_include_directories(mongoose PUBLIC mongoose)
-set_target_properties(mongoose PROPERTIES FOLDER "Deps/mongoose")
-
-target_compile_definitions(mongoose PUBLIC cxx_std_17)
-if(MSVC)
-	target_compile_options(mongoose PRIVATE /W0)
-else()
-	target_compile_options(mongoose PRIVATE -Werror)
-endif()
-endif()
-
-if(NOT DEFINED TP_imgui OR TP_imgui)
+if(NOT DEFINED deps_imgui OR deps_imgui)
 ############################ imgui ############################
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui/backends/imgui_impl_glfw.h ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui/imgui_impl_glfw.h COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui/backends/imgui_impl_glfw.cpp ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui/imgui_impl_glfw.cpp COPYONLY)
@@ -149,7 +46,7 @@ target_link_libraries(example_glfw_opengl3 PRIVATE imgui glfw opengl32.lib glu32
 set_target_properties(example_glfw_opengl3 PROPERTIES FOLDER "Deps/imgui")
 endif()
 
-if(NOT DEFINED TP_implot OR TP_implot)
+if(NOT DEFINED deps_implot OR deps_implot)
 ############################ implot ############################
 set(implot_includes
 	${CMAKE_CURRENT_SOURCE_DIR}/implot/implot/implot.h
@@ -171,7 +68,7 @@ set_target_properties(implot PROPERTIES FOLDER "Deps/implot")
 set_target_properties(implot_demo PROPERTIES FOLDER "Deps/implot")
 endif()
 
-if(NOT DEFINED TP_pugixml OR TP_pugixml)
+if(NOT DEFINED deps_pugixml OR deps_pugixml)
 ############################ pugixml ############################
 file(GLOB px_inc ${CMAKE_CURRENT_SOURCE_DIR}/pugixml/pugixml/src/*.hpp)
 file(GLOB px_src ${CMAKE_CURRENT_SOURCE_DIR}/pugixml/pugixml/src/*.cpp)
@@ -188,17 +85,7 @@ else()
 endif()
 endif()
 
-
-############################ Assimp ############################
-#set(BUILD_SHARED_LIBS false CACHE BOOL "" FORCE)
-#set(ASSIMP_INSTALL false CACHE BOOL "" FORCE)
-#set(ASSIMP_BUILD_TESTS false CACHE BOOL "" FORCE)
-#add_subdirectory(assimp)
-#set_target_properties(assimp PROPERTIES FOLDER "Deps/assimp")
-#set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES FOLDER "Deps/assimp")
-#set_target_properties(zlibstatic PROPERTIES FOLDER "Deps/assimp")
-
-if(NOT DEFINED TP_openfbx OR TP_openfbx)
+if(NOT DEFINED deps_openfbx OR deps_openfbx)
 ############################ openfbx ############################
 file(GLOB of_inc ${CMAKE_CURRENT_SOURCE_DIR}/openfbx/openfbx/src/*.h)
 file(GLOB of_src ${CMAKE_CURRENT_SOURCE_DIR}/openfbx/openfbx/src/*.c*)
@@ -216,7 +103,7 @@ else()
 endif()
 endif()
 
-if(NOT DEFINED TP_ufbx OR TP_ufbx)
+if(NOT DEFINED deps_ufbx OR deps_ufbx)
 ############################ ufbx ############################
 add_library(ufbx STATIC ${CMAKE_CURRENT_SOURCE_DIR}/ufbx/ufbx/ufbx.h ${CMAKE_CURRENT_SOURCE_DIR}/ufbx/ufbx/ufbx.c)
 target_include_directories(ufbx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/ufbx)
@@ -231,3 +118,20 @@ else()
 endif()
 endif()
 
+if(NOT DEFINED deps_bc7enc OR deps_bc7enc)
+############################ bc7enc ############################
+file(GLOB_RECURSE bc7enc_inc ${CMAKE_CURRENT_SOURCE_DIR}/bc7enc/bc7enc/*.h)
+file(GLOB_RECURSE bc7enc_src ${CMAKE_CURRENT_SOURCE_DIR}/bc7enc/bc7enc/*.c*)
+list(REMOVE_ITEM bc7enc_src ${CMAKE_CURRENT_SOURCE_DIR}/bc7enc/bc7enc/test.cpp)
+
+add_library(bc7enc STATIC ${bc7enc_inc} ${bc7enc_src})
+target_include_directories(bc7enc PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/bc7enc)
+set_target_properties(bc7enc PROPERTIES FOLDER "Deps/bc7enc")
+
+target_compile_definitions(bc7enc PUBLIC cxx_std_17)
+if(MSVC)
+	target_compile_options(bc7enc PRIVATE /W1)
+else()
+	target_compile_options(bc7enc PRIVATE -Werror)
+endif()
+endif()
