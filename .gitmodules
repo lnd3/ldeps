@@ -1,0 +1,33 @@
+[submodule "thirdparty/bs"]
+	path = thirdparty/bs
+	url = git@github.com:lnd3/bs.git
+[submodule "thirdparty/curl"]
+	path = thirdparty/curl
+	url = git@github.com:curl/curl.git
+[submodule "thirdparty/mongoose/mongoose"]
+	path = thirdparty/mongoose/mongoose
+	url = git@github.com:cesanta/mongoose.git
+[submodule "thirdparty/jsonxx/jsonxx"]
+	path = thirdparty/jsonxx/jsonxx
+	url = git@github.com:hjiang/jsonxx.git
+[submodule "thirdparty_mods/glfw"]
+	path = thirdparty_mods/glfw
+	url = git@github.com:lnd3/glfw
+[submodule "thirdparty_mods/imgui/imgui"]
+	path = thirdparty_mods/imgui/imgui
+	url = git@github.com:lnd3/imgui
+[submodule "thirdparty_mods/implot/implot"]
+	path = thirdparty_mods/implot/implot
+	url = git@github.com:lnd3/implot.git
+[submodule "thirdparty_mods/pugixml/pugixml"]
+	path = thirdparty_mods/pugixml/pugixml
+	url = git@github.com:lnd3/pugixml.git
+[submodule "thirdparty_mods/openfbx/openfbx"]
+	path = thirdparty_mods/openfbx/openfbx
+	url = git@github.com:lnd3/OpenFBX.git
+[submodule "thirdparty_mods/ufbx/ufbx"]
+	path = thirdparty_mods/ufbx/ufbx
+	url = git@github.com:lnd3/ufbx.git
+[submodule "thirdparty_mods/bc7enc/bc7enc"]
+	path = thirdparty_mods/bc7enc/bc7enc
+	url = git@github.com:lnd3/bc7enc.git
