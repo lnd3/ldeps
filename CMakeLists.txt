@@ -1,5 +1,9 @@
 cmake_minimum_required (VERSION 3.0.2)
 
+project(ldeps)
+include(CTest)
+enable_testing()
+
 set(TEST_VULKAN False)
 
 # deps thirdparty
@@ -25,5 +29,9 @@ add_subdirectory(thirdparty_mods)
 add_subdirectory(src)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/thirdparty/bs/cmake)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} PARENT_SCOPE)
+
+get_directory_property(hasParent PARENT_DIRECTORY)
+if(hasParent)
+	set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} PARENT_SCOPE)
+endif()
 
