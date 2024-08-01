@@ -6,7 +6,7 @@ file(GLOB_RECURSE various_inc ${CMAKE_CURRENT_SOURCE_DIR}/various/include/variou
 file(GLOB_RECURSE various_src ${CMAKE_CURRENT_SOURCE_DIR}/various/src/*.*)
 add_library(various STATIC ${various_inc} ${various_src})
 target_include_directories(various PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/various/include)
-set_target_properties(various PROPERTIES FOLDER "Deps/various")
+set_target_properties(various PROPERTIES FOLDER "Deps/src/various")
 
 target_compile_definitions(various PUBLIC cxx_std_17)
 endif()
@@ -18,7 +18,7 @@ add_library(glad STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/glad/include/KHR/khrplatform.h
 	${CMAKE_CURRENT_SOURCE_DIR}/glad/src/glad.c)
 target_include_directories(glad PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/glad/include)
-set_target_properties(glad PROPERTIES FOLDER "Deps/glad")
+set_target_properties(glad PROPERTIES FOLDER "Deps/src/glad")
 
 target_compile_definitions(glad PUBLIC cxx_std_17)
 if(MSVC)
