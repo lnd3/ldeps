@@ -1,5 +1,11 @@
 cmake_minimum_required (VERSION 3.0.2)
 
+if(NOT DEFINED deps_bs OR deps_bs)
+add_library(bs STATIC cmake/bs.cmake)
+target_include_directories(bs PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+set_target_properties(bs PROPERTIES FOLDER "Deps/thirdparty/bs")
+endif()
+
 if(NOT DEFINED deps_jsonxx OR deps_jsonxx)
 ############################ jsonxx ############################
 file(GLOB_RECURSE jsonxx_inc ${CMAKE_CURRENT_SOURCE_DIR}/jsonxx/jsonxx/jsonxx.h)
