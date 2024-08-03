@@ -5,6 +5,7 @@ project(ldeps)
 set(TEST_VULKAN False)
 
 # deps thirdparty
+set(deps_bs True)
 set(deps_jsonxx True)
 set(deps_curl True)
 set(deps_mongoose True)
