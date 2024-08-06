@@ -41,9 +41,13 @@ if(TARGET Vulkan::Vulkan)
 endif()
 
 set_target_properties(imgui PROPERTIES FOLDER "Deps/thirdparty_mods/imgui")
-add_executable(example_glfw_opengl3 imgui/imgui/examples/example_glfw_opengl3/main.cpp)
-target_link_libraries(example_glfw_opengl3 PRIVATE imgui glfw opengl32.lib glu32.lib winmm.lib)
-set_target_properties(example_glfw_opengl3 PROPERTIES FOLDER "Deps/thirdparty_mods/imgui")
+
+if(WIN32)
+	add_executable(example_glfw_opengl3 imgui/imgui/examples/example_glfw_opengl3/main.cpp)
+	target_link_libraries(example_glfw_opengl3 PRIVATE imgui glfw opengl32.lib glu32.lib winmm.lib)
+	set_target_properties(example_glfw_opengl3 PROPERTIES FOLDER "Deps/thirdparty_mods/imgui")
+endif()
+
 endif()
 
 if(NOT DEFINED deps_implot OR deps_implot)
@@ -60,12 +64,14 @@ set(implot_source
 add_library(implot STATIC ${implot_includes} ${implot_source})
 target_include_directories(implot PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/implot)
 target_link_libraries(implot PRIVATE imgui)
-
-add_executable(implot_demo ${CMAKE_CURRENT_SOURCE_DIR}/implot/implot/implot_demo.cpp ${CMAKE_CURRENT_SOURCE_DIR}/implot/implot/main.cpp)
-target_link_libraries(implot_demo PRIVATE imgui implot glfw opengl32.lib glu32.lib winmm.lib)
-
 set_target_properties(implot PROPERTIES FOLDER "Deps/thirdparty_mods/implot")
-set_target_properties(implot_demo PROPERTIES FOLDER "Deps/thirdparty_mods/implot")
+
+if(WIN32)
+	add_executable(implot_demo ${CMAKE_CURRENT_SOURCE_DIR}/implot/implot/implot_demo.cpp ${CMAKE_CURRENT_SOURCE_DIR}/implot/implot/main.cpp)
+	target_link_libraries(implot_demo PRIVATE imgui implot glfw opengl32.lib glu32.lib winmm.lib)
+	set_target_properties(implot_demo PROPERTIES FOLDER "Deps/thirdparty_mods/implot")
+endif()
+
 endif()
 
 if(NOT DEFINED deps_pugixml OR deps_pugixml)
