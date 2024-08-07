@@ -1,5 +1,3 @@
-cmake_minimum_required (VERSION 3.0.2)
-
 if(NOT DEFINED deps_bs OR deps_bs)
 add_custom_target(bs SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/bs/cmake/bs.cmake)
 set_target_properties(bs PROPERTIES FOLDER "Deps/thirdparty/bs")
