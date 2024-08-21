@@ -31,3 +31,6 @@
 [submodule "thirdparty_mods/bc7enc/bc7enc"]
 	path = thirdparty_mods/bc7enc/bc7enc
 	url = git@github.com:lnd3/bc7enc.git
+[submodule "thirdparty_mods/imnode/imgui-node-editor"]
+	path = thirdparty_mods/imnode/imgui-node-editor
+	url = git@github.com:thedmd/imgui-node-editor.git
