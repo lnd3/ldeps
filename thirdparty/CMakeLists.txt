@@ -70,3 +70,23 @@ else()
 	target_compile_options(mongoose PRIVATE -Werror)
 endif()
 endif()
+
+if(NOT DEFINED deps_soundio OR deps_soundio)
+############################ Mongoose ############################
+set(BUILD_STATIC_LIBS True)
+set(BUILD_DYNAMIC_LIBS False)
+set(BUILD_EXAMPLE_PROGRAMS False)
+set(BUILD_TESTS False)
+set(ENABLE_JACK False)
+set(ENABLE_PULSEAUDIO False)
+set(ENABLE_ALSA True)
+set(ENABLE_COREAUDIO False)
+set(ENABLE_WASAPI True)
+
+add_subdirectory(soundio/soundio)
+set_target_properties(libsoundio_static PROPERTIES FOLDER "Deps/thirdparty/libsoundio")
+
+if(MSVC)
+endif()
+endif()
+
