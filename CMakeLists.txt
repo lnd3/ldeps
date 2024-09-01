@@ -9,6 +9,7 @@ set(deps_bs True)
 set(deps_jsonxx True)
 set(deps_curl True)
 set(deps_mongoose True)
+set(deps_portaudio True)
 
 # deps thirdparty mods
 set(deps_glfw True)
