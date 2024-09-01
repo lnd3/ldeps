@@ -73,9 +73,32 @@ endif()
 
 if(NOT DEFINED deps_portaudio OR deps_portaudio)
 ############################ Mongoose ############################
+
+if(MSVC)
+set(PA_BUILD_EXAMPLES True)
+endif()
+
 add_subdirectory(portaudio/portaudio)
 set_target_properties(PortAudio PROPERTIES FOLDER "Deps/thirdparty/portaudio")
 set_target_properties(uninstall PROPERTIES FOLDER "Deps/thirdparty/portaudio")
+
+if(PA_BUILD_EXAMPLES)
+set_target_properties(pa_devs PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(pa_fuzz PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_ocean_shore PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_pink PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_read_write_wire PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_record PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_record_file PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_saw PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_sine PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_wmme_ac3 PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_wmme_surround PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_write_sine PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_write_sine_nonint PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+set_target_properties(paex_sine_c++ PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
+endif()
+
 target_compile_definitions(PortAudio PUBLIC cxx_std_14)
 if(MSVC)
 	target_compile_options(PortAudio PRIVATE /W3)
