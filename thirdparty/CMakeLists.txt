@@ -74,9 +74,7 @@ endif()
 if(NOT DEFINED deps_portaudio OR deps_portaudio)
 ############################ Mongoose ############################
 
-if(MSVC)
-set(PA_BUILD_EXAMPLES True)
-endif()
+set(PA_BUILD_EXAMPLES False)
 
 add_subdirectory(portaudio/portaudio)
 set_target_properties(PortAudio PROPERTIES FOLDER "Deps/thirdparty/portaudio")
