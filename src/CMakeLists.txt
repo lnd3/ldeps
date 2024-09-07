@@ -1,5 +1,3 @@
-cmake_minimum_required (VERSION 3.0.2)
-
 if(NOT DEFINED deps_various OR deps_various)
 ############################ Various ############################
 file(GLOB_RECURSE various_inc ${CMAKE_CURRENT_SOURCE_DIR}/various/include/various/*.h)
@@ -9,6 +7,11 @@ target_include_directories(various PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/various/in
 set_target_properties(various PROPERTIES FOLDER "Deps/src/various")
 
 target_compile_definitions(various PUBLIC cxx_std_17)
+if(MSVC)
+	target_compile_options(various PRIVATE /w)
+else()
+	target_compile_options(various PRIVATE -w)
+endif()
 endif()
 
 if(NOT DEFINED deps_glad OR deps_glad)
