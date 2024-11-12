@@ -110,6 +110,7 @@ if(NOT DEFINED deps_ed25519 OR deps_ed25519)
 ############################ deps_ed25519 ############################
 file(GLOB_RECURSE ed25519_inc ${CMAKE_CURRENT_SOURCE_DIR}/ed25519/ed25519/src/*.h)
 file(GLOB_RECURSE ed25519_src ${CMAKE_CURRENT_SOURCE_DIR}/ed25519/ed25519/src/*.c)
+SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/ed25519/ed25519/src PREFIX ed25519 FILES ${ed25519_inc})
 
 add_library(ed25519 STATIC ${ed25519_inc} ${ed25519_src})
 target_include_directories(ed25519 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/ed25519)
