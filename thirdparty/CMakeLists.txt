@@ -105,3 +105,19 @@ else()
 	target_compile_options(PortAudio PRIVATE -w)
 endif()
 endif()
+
+if(NOT DEFINED deps_ed25519 OR deps_ed25519)
+############################ deps_ed25519 ############################
+file(GLOB_RECURSE ed25519_inc ${CMAKE_CURRENT_SOURCE_DIR}/ed25519/ed25519/src/*.h)
+file(GLOB_RECURSE ed25519_src ${CMAKE_CURRENT_SOURCE_DIR}/ed25519/ed25519/src/*.c)
+
+add_library(ed25519 STATIC ${ed25519_inc} ${ed25519_src})
+target_include_directories(ed25519 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/ed25519)
+set_target_properties(ed25519 PROPERTIES FOLDER "Deps/thirdparty/ed25519")
+
+if(MSVC)
+	target_compile_options(ed25519 PRIVATE /W1)
+else()
+	target_compile_options(ed25519 PRIVATE -Werror)
+endif()
+endif()
