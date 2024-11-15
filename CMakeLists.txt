@@ -20,6 +20,7 @@ set(deps_pugixml True)
 set(deps_openfbx True)
 set(deps_ufbx True)
 set(deps_bc7enc True)
+set(deps_cryptopp True)
 
 # deps in repo src
 set(deps_glad True)

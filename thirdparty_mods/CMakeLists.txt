@@ -139,3 +139,20 @@ else()
 	target_compile_options(bc7enc PRIVATE -Werror)
 endif()
 endif()
+
+if(NOT DEFINED deps_cryptopp OR deps_cryptopp)
+############################ bc7enc ############################
+file(GLOB cryptopp_inc ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.h)
+file(GLOB cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.c*)
+
+add_library(cryptopp STATIC ${cryptopp_inc} ${cryptopp_src})
+target_include_directories(cryptopp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp)
+set_target_properties(cryptopp PROPERTIES FOLDER "Deps/thirdparty_mods/cryptopp")
+
+target_compile_definitions(cryptopp PUBLIC cxx_std_17)
+if(MSVC)
+	target_compile_options(cryptopp PRIVATE /W1)
+else()
+	target_compile_options(cryptopp PRIVATE -Werror)
+endif()
+endif()
