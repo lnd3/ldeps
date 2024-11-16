@@ -145,6 +145,7 @@ if(NOT DEFINED deps_cryptopp OR deps_cryptopp)
 file(GLOB cryptopp_inc ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.h)
 file(GLOB cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.c*)
 list(REMOVE_ITEM cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/blake2b_simd.cpp)
+list(REMOVE_ITEM cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/blake2s_simd.cpp)
 
 add_library(cryptopp STATIC ${cryptopp_inc} ${cryptopp_src})
 target_include_directories(cryptopp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp)
