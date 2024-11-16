@@ -10,6 +10,7 @@ set(deps_jsonxx True)
 set(deps_curl True)
 set(deps_mongoose True)
 set(deps_portaudio True)
+set(deps_ed25519 True)
 
 # deps thirdparty mods
 set(deps_glfw True)
@@ -19,6 +20,7 @@ set(deps_pugixml True)
 set(deps_openfbx True)
 set(deps_ufbx True)
 set(deps_bc7enc True)
+set(deps_cryptopp True)
 
 # deps in repo src
 set(deps_glad True)

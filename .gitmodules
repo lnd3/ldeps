@@ -34,3 +34,9 @@
 [submodule "thirdparty/portaudio/portaudio"]
 	path = thirdparty/portaudio/portaudio
 	url = git@github.com:PortAudio/portaudio.git
+[submodule "thirdparty/ed25519/ed25519"]
+	path = thirdparty/ed25519/ed25519
+	url = git@github.com:orlp/ed25519.git
+[submodule "thirdparty_mods/cryptopp/cryptopp"]
+	path = thirdparty_mods/cryptopp/cryptopp
+	url = git@github.com:weidai11/cryptopp.git
