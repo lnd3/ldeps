@@ -144,8 +144,6 @@ if(NOT DEFINED deps_cryptopp OR deps_cryptopp)
 ############################ bc7enc ############################
 file(GLOB cryptopp_inc ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.h)
 file(GLOB cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.c*)
-list(REMOVE_ITEM cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/blake2b_simd.cpp)
-list(REMOVE_ITEM cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/blake2s_simd.cpp)
 
 add_library(cryptopp STATIC ${cryptopp_inc} ${cryptopp_src})
 target_include_directories(cryptopp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp)
@@ -154,7 +152,13 @@ set_target_properties(cryptopp PROPERTIES FOLDER "Deps/thirdparty_mods/cryptopp"
 target_compile_definitions(cryptopp PUBLIC cxx_std_17)
 if(MSVC)
 	target_compile_options(cryptopp PRIVATE /W1)
+    target_compile_options(cryptopp INTERFACE /arch:SSE4.2 /arch:AVX)
 else()
+	# for some reason sse3/sse4 does not compile in WSL on the same machine it works in msvc
+	target_compile_definitions(cryptopp PUBLIC CRYPTOPP_DISABLE_SSSE3=1)
+	target_compile_definitions(cryptopp PUBLIC CRYPTOPP_DISABLE_SSE4=1)
+	
 	target_compile_options(cryptopp PRIVATE -Werror)
+    target_compile_options(cryptopp INTERFACE -msse4.2 -mavx)
 endif()
 endif()
