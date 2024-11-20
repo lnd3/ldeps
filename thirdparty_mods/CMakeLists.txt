@@ -138,7 +138,7 @@ endif()
 endif()
 
 if(NOT DEFINED deps_cryptopp OR deps_cryptopp)
-############################ bc7enc ############################
+############################ cryptopp ############################
 file(GLOB cryptopp_inc ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.h)
 file(GLOB cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.c*)
 SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp PREFIX include FILES ${cryptopp_inc})
@@ -148,7 +148,8 @@ add_library(cryptopp STATIC ${cryptopp_inc} ${cryptopp_src})
 target_include_directories(cryptopp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp)
 set_target_properties(cryptopp PROPERTIES FOLDER "Deps/thirdparty_mods/cryptopp")
 
-target_compile_definitions(cryptopp PUBLIC cxx_std_14)
+# also disable asm build
+target_compile_definitions(cryptopp PUBLIC cxx_std_14 CRYPTOPP_DISABLE_ASM=1)
 
 if(MSVC)
 	target_compile_options(cryptopp PRIVATE /W1)
