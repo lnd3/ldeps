@@ -68,7 +68,7 @@ target_compile_definitions(mongoose PUBLIC cxx_std_17)
 if(MSVC)
 	target_compile_options(mongoose PRIVATE /W0)
 else()
-	target_compile_options(mongoose PRIVATE -Werror -Wstringop-overflow=3)
+	target_compile_options(mongoose PRIVATE -Werror -Wno-stringop-overread)
 endif()
 endif()
 
