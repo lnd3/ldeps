@@ -80,7 +80,6 @@ SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/pugixml/pugixml/src PREFIX pugixml
 
 add_library(pugixml STATIC ${px_inc} ${px_src})
 target_include_directories(pugixml PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pugixml)
-target_link_libraries(pugixml)
 set_target_properties(pugixml PROPERTIES FOLDER "Deps/thirdparty_mods/pugixml")
 if(MSVC)
 	target_compile_options(pugixml PRIVATE /W1 /WX)
@@ -96,7 +95,6 @@ file(GLOB of_src ${CMAKE_CURRENT_SOURCE_DIR}/openfbx/openfbx/src/*.c*)
 SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/openfbx/openfbx/src PREFIX openfbx FILES ${of_inc})
 add_library(openfbx STATIC ${of_inc} ${of_src})
 target_include_directories(openfbx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/openfbx)
-target_link_libraries(openfbx)
 set_target_properties(openfbx PROPERTIES FOLDER "Deps/thirdparty_mods/openfbx")
 
 target_compile_definitions(openfbx PUBLIC cxx_std_17)
@@ -111,7 +109,6 @@ if(NOT DEFINED deps_ufbx OR deps_ufbx)
 ############################ ufbx ############################
 add_library(ufbx STATIC ${CMAKE_CURRENT_SOURCE_DIR}/ufbx/ufbx/ufbx.h ${CMAKE_CURRENT_SOURCE_DIR}/ufbx/ufbx/ufbx.c)
 target_include_directories(ufbx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/ufbx)
-target_link_libraries(ufbx)
 set_target_properties(ufbx PROPERTIES FOLDER "Deps/thirdparty_mods/ufbx")
 
 target_compile_definitions(ufbx PUBLIC cxx_std_17)
@@ -137,5 +134,32 @@ if(MSVC)
 	target_compile_options(bc7enc PRIVATE /W1)
 else()
 	target_compile_options(bc7enc PRIVATE -Werror)
+endif()
+endif()
+
+if(NOT DEFINED deps_cryptopp OR deps_cryptopp)
+############################ cryptopp ############################
+file(GLOB cryptopp_inc ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.h)
+file(GLOB cryptopp_src ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp/*.c*)
+SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp PREFIX include FILES ${cryptopp_inc})
+SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp/cryptopp PREFIX source FILES ${cryptopp_src})
+
+add_library(cryptopp STATIC ${cryptopp_inc} ${cryptopp_src})
+target_include_directories(cryptopp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/cryptopp)
+set_target_properties(cryptopp PROPERTIES FOLDER "Deps/thirdparty_mods/cryptopp")
+
+# also disable asm build
+target_compile_definitions(cryptopp PUBLIC cxx_std_14 CRYPTOPP_DISABLE_ASM=1)
+
+if(MSVC)
+	target_compile_options(cryptopp PRIVATE /W1)
+else()
+	# for some reason sse3/sse4 does not compile in WSL (or on github gnuc) on the same machine it works in msvc
+	# something probably has to be configured differently for it to work on linux
+	target_compile_definitions(cryptopp PUBLIC CRYPTOPP_DISABLE_SSSE3=1)
+	target_compile_definitions(cryptopp PUBLIC CRYPTOPP_DISABLE_SSE4=1)
+	
+	target_compile_options(cryptopp PRIVATE -Werror)
+    target_compile_options(cryptopp INTERFACE -msse4.2 -mavx)
 endif()
 endif()
