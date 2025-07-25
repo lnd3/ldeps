@@ -33,8 +33,9 @@ if(WIN32)
 	set(CURL_USE_SCHANNEL True)
 	set(CURL_WINDOWS_SSPI True)
 	set(USE_WIN32_LDAP True)
-	set(CURL_USE_LIBPSL False)
 endif()
+
+set(CURL_USE_LIBPSL False)
 
 #set(ENABLE_CURL_DEBUG On)
 #set(ENABLE_DEBUG On)
