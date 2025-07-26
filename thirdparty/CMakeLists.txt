@@ -28,6 +28,7 @@ set(BUILD_TESTING False)
 #set(CURL_CA_FALLBACK On)
 set(CURL_ENABLE_SSL True)
 set(ENABLE_WEBSOCKETS True)
+set(BUILD_EXAMPLES False)
 
 if(WIN32)
 	set(CURL_USE_SCHANNEL True)
@@ -36,11 +37,12 @@ if(WIN32)
 endif()
 
 set(CURL_USE_LIBPSL False)
-
+set(PERL_EXECUTABLE False)
+set(BUILD_LIBCURL_DOCS False)
 #set(ENABLE_CURL_DEBUG On)
 #set(ENABLE_DEBUG On)
 #set(ENABLE_UNIX_SOCKETS On)
-set(ENABLE_WEBSOCKETS True)
+
 add_subdirectory(curl)
 set_target_properties(curl PROPERTIES FOLDER "Deps/thirdparty/curl")
 
@@ -56,6 +58,9 @@ if(TARGET libcurl_object)
 endif()
 if(TARGET curltool)
 	set_target_properties(curltool PROPERTIES FOLDER "Deps/thirdparty/curl")
+endif()
+if(TARGET curlinfo)
+	set_target_properties(curlinfo PROPERTIES FOLDER "Deps/thirdparty/curl")
 endif()
 
 endif()
