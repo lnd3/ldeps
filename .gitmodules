@@ -42,16 +42,16 @@
 	url = git@github.com:weidai11/cryptopp.git
 [submodule "thirdparty/tiny-dnn/tiny-dnn"]
 	path = thirdparty/tiny-dnn/tiny-dnn
-	url = https://github.com/tiny-dnn/tiny-dnn.git
+	url = git@github.com:tiny-dnn/tiny-dnn.git
 [submodule "thirdparty/darknet/darknet"]
 	path = thirdparty/darknet/darknet
-	url = https://github.com/pjreddie/darknet.git
+	url = git@github.com:pjreddie/darknet.git
 [submodule "thirdparty/fann/fann"]
 	path = thirdparty/fann/fann
-	url = git@github.com/libfann/fann
+	url = git@github.com:libfann/fann
 [submodule "thirdparty/tengine/tengine"]
 	path = thirdparty/tengine/tengine
-	url = git@github.com/OAID/Tengine.git
+	url = git@github.com:OAID/Tengine.git
 [submodule "thirdparty/ncnn/ncnn"]
 	path = thirdparty/ncnn/ncnn
-	url = git@github.com/Tencent/ncnn
+	url = git@github.com:Tencent/ncnn
