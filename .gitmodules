@@ -48,10 +48,10 @@
 	url = https://github.com/pjreddie/darknet.git
 [submodule "thirdparty/fann/fann"]
 	path = thirdparty/fann/fann
-	url = https://github.com/libfann/fann
+	url = git@github.com/libfann/fann
 [submodule "thirdparty/tengine/tengine"]
 	path = thirdparty/tengine/tengine
-	url = https://github.com/OAID/Tengine.git
+	url = git@github.com/OAID/Tengine.git
 [submodule "thirdparty/ncnn/ncnn"]
 	path = thirdparty/ncnn/ncnn
-	url = https://github.com/Tencent/ncnn
+	url = git@github.com/Tencent/ncnn
