@@ -42,7 +42,7 @@
 	url = git@github.com:weidai11/cryptopp.git
 [submodule "thirdparty/tiny-dnn/tiny-dnn"]
 	path = thirdparty/tiny-dnn/tiny-dnn
-	url = git@github.com:tiny-dnn/tiny-dnn.git
+	url = git@github.com:lnd3/tiny-dnn.git
 [submodule "thirdparty/darknet/darknet"]
 	path = thirdparty/darknet/darknet
 	url = git@github.com:pjreddie/darknet.git

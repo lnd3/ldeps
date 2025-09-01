@@ -1,0 +1,34 @@
+
+# Disable CUDA for CPU-only
+set(USE_CUDA OFF CACHE BOOL "Disable CUDA for CPU-only build")
+
+# Glob Darknet headers and sources
+file(GLOB darknet_inc ${CMAKE_CURRENT_SOURCE_DIR}/darknet/darknet/include/*.h)
+file(GLOB darknet_src ${CMAKE_CURRENT_SOURCE_DIR}/darknet/darknet/src/*.*)
+#SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/darknet/darknet/include PREFIX darknet FILES ${darknet_inc})
+
+add_library(darknet STATIC ${darknet_inc} ${darknet_src})
+target_include_directories(darknet PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/darknet/darknet/include)
+target_link_libraries(darknet PUBLIC pthreads)
+
+# Add examples
+if(deps_darknet_examples)
+add_executable(darknet_example_darknet ${CMAKE_CURRENT_SOURCE_DIR}/darknet/darknet/examples/darknet.c)
+target_link_libraries(darknet_example_darknet PRIVATE pthreads darknet)
+add_executable(darknet_example_dice ${CMAKE_CURRENT_SOURCE_DIR}/darknet/darknet/examples/dice.c)
+target_link_libraries(darknet_example_dice PRIVATE pthreads darknet)
+add_executable(darknet_example_detector ${CMAKE_CURRENT_SOURCE_DIR}/darknet/darknet/examples/detector.c)
+target_link_libraries(darknet_example_detector PRIVATE pthreads darknet)
+
+set_target_properties(darknet_example_darknet PROPERTIES FOLDER "Deps/thirdparty/darknet/examples")
+set_target_properties(darknet_example_dice PROPERTIES FOLDER "Deps/thirdparty/darknet/examples")
+set_target_properties(darknet_example_detector PROPERTIES FOLDER "Deps/thirdparty/darknet/examples")
+endif()
+
+target_compile_definitions(darknet PUBLIC cxx_std_17)
+if(MSVC)
+	target_compile_options(darknet PRIVATE /W3)
+else()
+	target_compile_options(darknet PRIVATE -w)
+endif()
+
