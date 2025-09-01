@@ -1,1 +1,1 @@
-#include "tiny-dnn/tiny_dnn.h"
+#include <tiny_dnn/tiny_dnn.h>
