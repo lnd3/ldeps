@@ -31,7 +31,7 @@ else()
 endif()
 endif()
 
-if(NOT DEFINED deps_pthreads OR deps_pthreads)
+if(MSVC AND (NOT DEFINED deps_pthreads OR deps_pthreads))
 ############################ pthreads ############################
 file(GLOB pthreads_inc ${CMAKE_CURRENT_SOURCE_DIR}/pthreads/pthreads/*.h)
 file(GLOB pthreads_src ${CMAKE_CURRENT_SOURCE_DIR}/pthreads/pthreads/*.c)
@@ -76,7 +76,9 @@ set(pthreads_src_2
 
 add_library(pthreads STATIC ${pthreads_inc} ${pthreads_src})
 target_include_directories(pthreads PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/pthreads/pthreads)
+if(MSVC)
 target_compile_definitions(pthreads PUBLIC PTW32_STATIC_LIB HAVE_STRUCT_TIMESPEC)
+endif()
 set_target_properties(pthreads PROPERTIES FOLDER "Deps/src/pthreads")
 
 target_compile_definitions(pthreads PUBLIC cxx_std_17)
