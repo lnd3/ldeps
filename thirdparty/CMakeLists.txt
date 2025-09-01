@@ -3,6 +3,7 @@ add_custom_target(bs SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/bs/cmake/bs.cmake)
 set_target_properties(bs PROPERTIES FOLDER "Deps/thirdparty/bs")
 endif()
 
+
 if(NOT DEFINED deps_jsonxx OR deps_jsonxx)
 ############################ jsonxx ############################
 file(GLOB_RECURSE jsonxx_inc ${CMAKE_CURRENT_SOURCE_DIR}/jsonxx/jsonxx/jsonxx.h)
@@ -20,6 +21,7 @@ else()
 endif()
 endif()
 
+
 if(NOT DEFINED deps_curl OR deps_curl)
 ############################ CURL ############################
 set(BUILD_SHARED_LIBS False)
@@ -28,6 +30,7 @@ set(BUILD_TESTING False)
 #set(CURL_CA_FALLBACK On)
 set(CURL_ENABLE_SSL True)
 set(ENABLE_WEBSOCKETS True)
+set(BUILD_EXAMPLES False)
 
 if(WIN32)
 	set(CURL_USE_SCHANNEL True)
@@ -35,10 +38,13 @@ if(WIN32)
 	set(USE_WIN32_LDAP True)
 endif()
 
+set(CURL_USE_LIBPSL False)
+set(PERL_EXECUTABLE False)
+set(BUILD_LIBCURL_DOCS False)
 #set(ENABLE_CURL_DEBUG On)
 #set(ENABLE_DEBUG On)
 #set(ENABLE_UNIX_SOCKETS On)
-set(ENABLE_WEBSOCKETS True)
+
 add_subdirectory(curl)
 set_target_properties(curl PROPERTIES FOLDER "Deps/thirdparty/curl")
 
@@ -55,8 +61,12 @@ endif()
 if(TARGET curltool)
 	set_target_properties(curltool PROPERTIES FOLDER "Deps/thirdparty/curl")
 endif()
+if(TARGET curlinfo)
+	set_target_properties(curlinfo PROPERTIES FOLDER "Deps/thirdparty/curl")
+endif()
 
 endif()
+
 
 if(NOT DEFINED deps_mongoose OR deps_mongoose)
 ############################ Mongoose ############################
@@ -71,6 +81,7 @@ else()
 	target_compile_options(mongoose PRIVATE -Werror -Wno-stringop-overread)
 endif()
 endif()
+
 
 if(NOT DEFINED deps_portaudio OR deps_portaudio)
 ############################ Mongoose ############################
@@ -106,6 +117,7 @@ else()
 endif()
 endif()
 
+
 if(NOT DEFINED deps_ed25519 OR deps_ed25519)
 ############################ deps_ed25519 ############################
 file(GLOB_RECURSE ed25519_inc ${CMAKE_CURRENT_SOURCE_DIR}/ed25519/ed25519/src/*.h)
@@ -122,3 +134,59 @@ else()
 	target_compile_options(ed25519 PRIVATE -Werror -Wno-unused-result)
 endif()
 endif()
+
+
+if(NOT DEFINED deps_darknet OR deps_darknet)
+############################ deps_darknet ############################
+add_subdirectory(darknet)
+set_target_properties(darknet PROPERTIES FOLDER "Deps/thirdparty/darknet")
+endif()
+
+
+if(NOT DEFINED deps_tiny_dnn OR deps_tiny_dnn)
+############################ deps_tiny_dnn ############################
+add_subdirectory(tiny-dnn)
+set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
+endif()
+
+
+if(NOT DEFINED deps_fann OR deps_fann)
+############################ deps_fann ############################
+add_subdirectory(fann)
+set_target_properties(doublefann PROPERTIES FOLDER "Deps/thirdparty/fann")
+set_target_properties(doublefann_static PROPERTIES FOLDER "Deps/thirdparty/fann")
+set_target_properties(fann_static PROPERTIES FOLDER "Deps/thirdparty/fann")
+set_target_properties(fann PROPERTIES FOLDER "Deps/thirdparty/fann")
+#set_target_properties(fann_tests PROPERTIES FOLDER "Deps/thirdparty/fann")
+set_target_properties(fixedfann PROPERTIES FOLDER "Deps/thirdparty/fann")
+set_target_properties(fixedfann_static PROPERTIES FOLDER "Deps/thirdparty/fann")
+set_target_properties(floatfann PROPERTIES FOLDER "Deps/thirdparty/fann")
+set_target_properties(floatfann_static PROPERTIES FOLDER "Deps/thirdparty/fann")
+endif()
+
+
+if(NOT DEFINED deps_tengine OR deps_tengine)
+############################ deps_tiny_dnn ############################
+add_subdirectory(tengine)
+set_target_properties(tengine PROPERTIES FOLDER "Deps/thirdparty/tengine")
+#target_compile_definitions(tengine PRIVATE TENGINE_ENABLE_OPENCL=0 TENGINE_ENABLE_CUDA=0) # CPU-only
+endif()
+
+
+if(NOT DEFINED deps_ncnn OR deps_ncnn)
+############################ deps_tiny_dnn ############################
+add_subdirectory(ncnn)
+set_target_properties(ncnn PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+set_target_properties(ncnn-generate-spirv PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+#set_target_properties(benchncnn PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+set_target_properties(darknet2ncnn PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+set_target_properties(mxnet2ncnn PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+set_target_properties(ncnn2int8 PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+set_target_properties(ncnn2table PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+set_target_properties(ncnn2mem PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+set_target_properties(ncnnmerge PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+set_target_properties(ncnnoptimize PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+#set_target_properties(ncnntestutil PROPERTIES FOLDER "Deps/thirdparty/ncnn")
+
+endif()
+
