@@ -26,14 +26,5 @@ add_subdirectory(tiny-dnn)
 
 add_library(tiny_dnn_static STATIC dummy.cpp)
 target_link_libraries(tiny_dnn_static PUBLIC tiny_dnn)
-
 set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
-set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
-set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
-set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
-set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
-set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
-set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
-
-
 
