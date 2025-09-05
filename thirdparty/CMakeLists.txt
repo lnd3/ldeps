@@ -147,6 +147,12 @@ if(NOT DEFINED deps_tiny_dnn OR deps_tiny_dnn)
 ############################ deps_tiny_dnn ############################
 add_subdirectory(tiny-dnn)
 set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
+target_compile_definitions(tiny_dnn_static PUBLIC cxx_std_17)
+if(MSVC)
+	target_compile_options(tiny_dnn_static PRIVATE /W3)
+else()
+	target_compile_options(tiny_dnn_static PRIVATE -Werror -Wno-conversion -Wno-unused-result)
+endif()
 endif()
 
 

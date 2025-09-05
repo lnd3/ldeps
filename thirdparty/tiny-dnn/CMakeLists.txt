@@ -22,6 +22,8 @@ set(COVERALLS False)
 set(PROFILE False)
 set(USE_ASAN False)
 
+set(BUILD_SHARED_LIBS OFF)
+
 add_subdirectory(tiny-dnn)
 
 add_library(tiny_dnn_static STATIC dummy.cpp)
