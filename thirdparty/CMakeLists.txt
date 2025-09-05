@@ -12,8 +12,8 @@ file(GLOB_RECURSE jsonxx_src ${CMAKE_CURRENT_SOURCE_DIR}/jsonxx/jsonxx/jsonxx.cc
 add_library(jsonxx STATIC ${jsonxx_inc} ${jsonxx_src})
 target_include_directories(jsonxx PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/jsonxx)
 set_target_properties(jsonxx PROPERTIES FOLDER "Deps/thirdparty/jsonxx")
+set_target_properties(jsonxx PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES)
 
-target_compile_definitions(jsonxx PUBLIC cxx_std_17)
 if(MSVC)
 	target_compile_options(jsonxx PRIVATE /W1)
 else()
@@ -73,8 +73,8 @@ if(NOT DEFINED deps_mongoose OR deps_mongoose)
 add_library(mongoose STATIC mongoose/mongoose/mongoose.h mongoose/mongoose/mongoose.c)
 target_include_directories(mongoose PUBLIC mongoose)
 set_target_properties(mongoose PROPERTIES FOLDER "Deps/thirdparty/mongoose")
+set_target_properties(mongoose PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
 
-target_compile_definitions(mongoose PUBLIC cxx_std_17)
 if(MSVC)
 	target_compile_options(mongoose PRIVATE /W0)
 else()
@@ -109,7 +109,7 @@ set_target_properties(paex_write_sine_nonint PROPERTIES FOLDER "Deps/thirdparty/
 set_target_properties(paex_sine_c++ PROPERTIES FOLDER "Deps/thirdparty/portaudio/examples")
 endif()
 
-target_compile_definitions(PortAudio PUBLIC cxx_std_14)
+set_target_properties(PortAudio PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
 if(MSVC)
 	target_compile_options(PortAudio PRIVATE /W3)
 else()
@@ -147,7 +147,8 @@ if(NOT DEFINED deps_tiny_dnn OR deps_tiny_dnn)
 ############################ deps_tiny_dnn ############################
 add_subdirectory(tiny-dnn)
 set_target_properties(tiny_dnn_static PROPERTIES FOLDER "Deps/thirdparty/tiny_dnn")
-target_compile_definitions(tiny_dnn_static PUBLIC cxx_std_17)
+set_target_properties(tiny_dnn_static PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES)
+
 if(MSVC)
 	target_compile_options(tiny_dnn_static PRIVATE /W3)
 else()
