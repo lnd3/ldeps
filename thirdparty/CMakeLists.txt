@@ -197,3 +197,67 @@ set_target_properties(ncnnoptimize PROPERTIES FOLDER "Deps/thirdparty/ncnn")
 
 endif()
 
+if(NOT DEFINED deps_libtorch OR deps_libtorch)
+option(USE_LIBTORCH "Enable support for libtorch" OFF)
+if(USE_LIBTORCH)
+    include(ExternalProject)
+
+    set(LIBTORCH_URL "https://download.pytorch.org/libtorch/cu128/libtorch-win-shared-with-deps-2.8.0%2Bcu128.zip")
+    set(LIBTORCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libtorch)
+
+    message(STATUS "Libtorch downloading to ${LIBTORCH_DIR}")
+
+    ExternalProject_Add(libtorch_download
+        PREFIX ${CMAKE_BINARY_DIR}/libtorch_ep
+        URL ${LIBTORCH_URL}
+        DOWNLOAD_EXTRACT_TIMESTAMP OFF
+        DOWNLOAD_NAME libtorch.zip
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ""
+        LOG_DOWNLOAD ON
+        LOG_CONFIGURE ON
+        LOG_BUILD ON
+        LOG_INSTALL ON
+        SOURCE_DIR ${LIBTORCH_DIR}
+    )
+    set_target_properties(libtorch_download PROPERTIES FOLDER "Deps/thirdparty/libtorch")
+
+	find_package(Torch QUIET PATHS "${LIBTORCH_DIR}")
+	if(TORCH_FOUND)
+		message(STATUS "Libtorch found at ${LIBTORCH_DIR}")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+
+        # Path to libtorch include/lib
+        set(LIBTORCH_INCLUDE_DIR ${LIBTORCH_DIR}/include)
+        set(LIBTORCH_LIB_DIR ${LIBTORCH_DIR}/lib)
+
+        # Set these only after the project is built
+        add_library(libtorch INTERFACE)
+        add_dependencies(libtorch libtorch_download)
+
+        target_include_directories(libtorch INTERFACE
+            ${LIBTORCH_INCLUDE_DIR}
+            ${LIBTORCH_INCLUDE_DIR}/torch/csrc/api/include
+        )
+
+        target_link_directories(libtorch INTERFACE ${LIBTORCH_LIB_DIR})
+        target_link_libraries(libtorch INTERFACE
+            torch
+            torch_cpu
+            c10
+        )
+
+        file(WRITE ${LIBTORCH_DIR}/libtorch_stub.cpp "// Torch stub")
+        target_sources(libtorch INTERFACE ${LIBTORCH_DIR}/libtorch_stub.cpp)
+
+        set_target_properties(libtorch PROPERTIES FOLDER "Deps/thirdparty/libtorch")
+
+	else()
+		message(WARNING "Libtorch not found. Disabling torch support.")
+		set(USE_LIBTORCH OFF)
+	endif()
+
+endif()
+endif()
+

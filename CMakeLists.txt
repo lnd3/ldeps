@@ -19,6 +19,8 @@ set(deps_tengine False)
 set(deps_tengine_examples False)
 set(deps_ncnn True)
 set(deps_ncnn_examples False)
+set(deps_libtorch True)
+
 
 # deps thirdparty mods
 set(deps_glfw True)
