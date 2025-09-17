@@ -232,6 +232,8 @@ if(USE_LIBTORCH)
         set(LIBTORCH_INCLUDE_DIR ${LIBTORCH_DIR}/include)
         set(LIBTORCH_LIB_DIR ${LIBTORCH_DIR}/lib)
 
+      	compile_definitions(LDEPS_USE_LIBTORCH=1)
+
         # Set these only after the project is built
         add_library(libtorch INTERFACE)
         add_dependencies(libtorch libtorch_download)
