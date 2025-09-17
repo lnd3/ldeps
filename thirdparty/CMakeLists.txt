@@ -226,33 +226,32 @@ if(USE_LIBTORCH)
 	find_package(Torch QUIET PATHS "${LIBTORCH_DIR}")
 	if(TORCH_FOUND)
 		message(STATUS "Libtorch found at ${LIBTORCH_DIR}")
+		message(STATUS "Libtorch shared libs ${TORCH_LIBRARIES}")
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
 
         # Path to libtorch include/lib
         set(LIBTORCH_INCLUDE_DIR ${LIBTORCH_DIR}/include)
         set(LIBTORCH_LIB_DIR ${LIBTORCH_DIR}/lib)
 
-      	compile_definitions(LDEPS_USE_LIBTORCH=1)
-
         # Set these only after the project is built
         add_library(libtorch INTERFACE)
         add_dependencies(libtorch libtorch_download)
 
-        target_include_directories(libtorch INTERFACE
+        target_include_directories(libtorch INTERFACE 
             ${LIBTORCH_INCLUDE_DIR}
-            ${LIBTORCH_INCLUDE_DIR}/torch/csrc/api/include
+            ${LIBTORCH_INCLUDE_DIR}/torch/csrc/api/include        
         )
-
         target_link_directories(libtorch INTERFACE ${LIBTORCH_LIB_DIR})
         target_link_libraries(libtorch INTERFACE
-            torch
-            torch_cpu
-            c10
+            "${LIBTORCH_LIB_DIR}/torch.lib"
+            "${LIBTORCH_LIB_DIR}/torch_cpu.lib"
+            "${LIBTORCH_LIB_DIR}/c10.lib"
         )
+      	target_compile_definitions(libtorch INTERFACE LDEPS_USE_LIBTORCH=1)
         target_compile_features(libtorch INTERFACE cxx_std_17)
 
-        file(WRITE ${LIBTORCH_DIR}/libtorch_stub.cpp "// Torch stub")
-        target_sources(libtorch INTERFACE ${LIBTORCH_DIR}/libtorch_stub.cpp)
+        #file(WRITE ${LIBTORCH_DIR}/libtorch_stub.cpp "// Torch stub")
+        #target_sources(libtorch INTERFACE ${LIBTORCH_DIR}/libtorch_stub.cpp)
 
         set_target_properties(libtorch PROPERTIES FOLDER "Deps/thirdparty/libtorch")
 
