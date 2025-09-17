@@ -247,6 +247,7 @@ if(USE_LIBTORCH)
             torch_cpu
             c10
         )
+        target_compile_features(libtorch INTERFACE cxx_std_17)
 
         file(WRITE ${LIBTORCH_DIR}/libtorch_stub.cpp "// Torch stub")
         target_sources(libtorch INTERFACE ${LIBTORCH_DIR}/libtorch_stub.cpp)
