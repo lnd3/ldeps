@@ -232,6 +232,12 @@ if(USE_LIBTORCH)
         # Path to libtorch include/lib
         set(LIBTORCH_INCLUDE_DIR ${LIBTORCH_DIR}/include)
         set(LIBTORCH_LIB_DIR ${LIBTORCH_DIR}/lib)
+        list(APPEND 
+            LIBTORCH_LIBS
+            "${LIBTORCH_LIB_DIR}/torch.dll"
+            "${LIBTORCH_LIB_DIR}/torch_cpu.dll"
+            "${LIBTORCH_LIB_DIR}/c10.dll"
+        )
 
         # Set these only after the project is built
         add_library(libtorch INTERFACE)
@@ -242,6 +248,7 @@ if(USE_LIBTORCH)
             ${LIBTORCH_INCLUDE_DIR}/torch/csrc/api/include        
         )
         target_link_directories(libtorch INTERFACE ${LIBTORCH_LIB_DIR})
+
         target_link_libraries(libtorch INTERFACE
             "${LIBTORCH_LIB_DIR}/torch.lib"
             "${LIBTORCH_LIB_DIR}/torch_cpu.lib"
@@ -249,6 +256,7 @@ if(USE_LIBTORCH)
         )
       	target_compile_definitions(libtorch INTERFACE LDEPS_USE_LIBTORCH=1)
         target_compile_features(libtorch INTERFACE cxx_std_17)
+        set(LDEPS_LIBTORCH_LIB_DIR ${LIBTORCH_LIB_DIR} CACHE INTERNAL "List of libtorch shared libraries")
 
         #file(WRITE ${LIBTORCH_DIR}/libtorch_stub.cpp "// Torch stub")
         #target_sources(libtorch INTERFACE ${LIBTORCH_DIR}/libtorch_stub.cpp)
