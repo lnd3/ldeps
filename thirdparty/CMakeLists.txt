@@ -232,12 +232,6 @@ if(USE_LIBTORCH)
         # Path to libtorch include/lib
         set(LIBTORCH_INCLUDE_DIR ${LIBTORCH_DIR}/include)
         set(LIBTORCH_LIB_DIR ${LIBTORCH_DIR}/lib)
-        list(APPEND 
-            LIBTORCH_LIBS
-            "${LIBTORCH_LIB_DIR}/torch.dll"
-            "${LIBTORCH_LIB_DIR}/torch_cpu.dll"
-            "${LIBTORCH_LIB_DIR}/c10.dll"
-        )
 
         # Set these only after the project is built
         add_library(libtorch INTERFACE)
@@ -252,6 +246,7 @@ if(USE_LIBTORCH)
         target_link_libraries(libtorch INTERFACE
             "${LIBTORCH_LIB_DIR}/torch.lib"
             "${LIBTORCH_LIB_DIR}/torch_cpu.lib"
+            "${LIBTORCH_LIB_DIR}/torch_cuda.lib"
             "${LIBTORCH_LIB_DIR}/c10.lib"
         )
       	target_compile_definitions(libtorch INTERFACE LDEPS_USE_LIBTORCH=1)
