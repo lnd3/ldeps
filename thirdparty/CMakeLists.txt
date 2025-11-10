@@ -202,8 +202,14 @@ option(USE_LIBTORCH "Enable support for libtorch" OFF)
 if(USE_LIBTORCH)
     include(ExternalProject)
 
-    set(LIBTORCH_URL "https://download.pytorch.org/libtorch/cu128/libtorch-win-shared-with-deps-2.8.0%2Bcu128.zip")
-    set(LIBTORCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libtorch)
+    #set(LIBTORCH_URL "https://download.pytorch.org/libtorch/cu121/libtorch-win-shared-with-deps-2.1.0%2Bcu121.zip") # libtorch 2.1.0 for cuda 12.1
+    #set(LIBTORCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libtorch2.1cu121)
+    #set(LIBTORCH_URL "https://download.pytorch.org/libtorch/cu128/libtorch-win-shared-with-deps-2.8.0%2Bcu128.zip") # libtorch 2.8.0 for cuda 12.8
+    #set(LIBTORCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libtorch2.8cu128)
+    set(LIBTORCH_URL "https://download.pytorch.org/libtorch/cu129/libtorch-win-shared-with-deps-2.8.0%2Bcu129.zip") # libtorch 2.8.0 for cuda 12.9
+    set(LIBTORCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libtorch2.8cu129)
+    #set(LIBTORCH_URL "https://download.pytorch.org/libtorch/cu130/libtorch-win-shared-with-deps-2.9.0%2Bcu130.zip") # libtorch 2.9.0 for cuda 13.0
+    #set(LIBTORCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libtorch2.9cu130)
 
     message(STATUS "Libtorch downloading to ${LIBTORCH_DIR}")
 
@@ -245,9 +251,10 @@ if(USE_LIBTORCH)
 
         target_link_libraries(libtorch INTERFACE
             "${LIBTORCH_LIB_DIR}/torch.lib"
-            "${LIBTORCH_LIB_DIR}/torch_cpu.lib"
             "${LIBTORCH_LIB_DIR}/torch_cuda.lib"
             "${LIBTORCH_LIB_DIR}/c10.lib"
+            "${LIBTORCH_LIB_DIR}/c10_cuda.lib"
+            #"${LIBTORCH_LIB_DIR}/torch_cpu.lib"
         )
       	target_compile_definitions(libtorch INTERFACE LDEPS_USE_LIBTORCH=1)
         target_compile_features(libtorch INTERFACE cxx_std_17)
