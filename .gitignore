@@ -1,4 +1,4 @@
-thirdparty/libtorch
+thirdparty/libtorch_wrapper/libtorch*
 build
 projects
 Testing/Temporary
