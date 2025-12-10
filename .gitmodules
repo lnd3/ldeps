@@ -58,3 +58,9 @@
 [submodule "thirdparty/keccak/keccak"]
 	path = thirdparty/keccak/keccak
 	url = git@github.com:coruus/keccak-tiny.git
+[submodule "thirdparty/secp256k1/secp256k1"]
+	path = thirdparty/secp256k1/secp256k1
+	url = git@github.com:bitcoin-core/secp256k1.git
+[submodule "thirdparty/micro-ecc/micro-ecc"]
+	path = thirdparty/micro-ecc/micro-ecc
+	url = git@github.com:kmackay/micro-ecc.git
