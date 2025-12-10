@@ -131,7 +131,7 @@ target_include_directories(ed25519 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/ed25519)
 set_target_properties(ed25519 PROPERTIES FOLDER "Deps/thirdparty/ed25519")
 
 if(MSVC)
-	target_compile_options(ed25519 PRIVATE /W1)
+	target_compile_options(ed25519 PRIVATE /W1) # use /Qspectre for spectre mitigation
 else()
 	target_compile_options(ed25519 PRIVATE -Werror -Wno-unused-result)
 endif()
@@ -219,7 +219,7 @@ set_target_properties(keccak PROPERTIES FOLDER "Deps/thirdparty/keccak")
 
 set_target_properties(keccak PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED YES)
 if(MSVC)
-	target_compile_options(keccak PRIVATE /Wall)
+	target_compile_options(keccak PRIVATE /Wall) # use /Qspectre for spectre mitigation
 else()
 	target_compile_options(keccak PRIVATE -Werror -Wno-unused-result)
 endif()
