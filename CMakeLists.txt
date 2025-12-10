@@ -20,6 +20,7 @@ set(deps_tengine_examples False)
 set(deps_ncnn True)
 set(deps_ncnn_examples False)
 set(deps_libtorch True)
+set(deps_keccak True)
 
 
 # deps thirdparty mods

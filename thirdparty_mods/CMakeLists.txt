@@ -1,3 +1,5 @@
+cmake_minimum_required (VERSION 3.21.7)
+
 if(NOT DEFINED deps_glfw OR deps_glfw)
 ############################ GLFW ############################
 set(BUILD_SHARED_LIBS Off)

@@ -1,3 +1,5 @@
+cmake_minimum_required (VERSION 3.21.7)
+
 if(NOT DEFINED deps_bs OR deps_bs)
 add_custom_target(bs SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/bs/cmake/bs.cmake)
 set_target_properties(bs PROPERTIES FOLDER "Deps/thirdparty/bs")
@@ -201,6 +203,25 @@ if(NOT DEFINED deps_libtorch OR deps_libtorch)
 option(USE_LIBTORCH "Enable support for libtorch" OFF)
 if(USE_LIBTORCH)
     add_subdirectory(libtorch_wrapper)
+endif()
+endif()
+
+
+if(NOT DEFINED deps_keccak OR deps_keccak)
+############################ deps_keccak ############################
+file(GLOB_RECURSE keccak_inc ${CMAKE_CURRENT_SOURCE_DIR}/keccak/keccak/*.h)
+file(GLOB_RECURSE keccak_src ${CMAKE_CURRENT_SOURCE_DIR}/keccak/keccak/*.c)
+SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/keccak/keccak PREFIX keccak FILES ${keccak_inc})
+
+add_library(keccak STATIC ${keccak_inc} ${keccak_src})
+target_include_directories(keccak PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/keccak)
+set_target_properties(keccak PROPERTIES FOLDER "Deps/thirdparty/keccak")
+
+set_target_properties(keccak PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED YES)
+if(MSVC)
+	target_compile_options(keccak PRIVATE /Wall)
+else()
+	target_compile_options(keccak PRIVATE -Werror -Wno-unused-result)
 endif()
 endif()
 

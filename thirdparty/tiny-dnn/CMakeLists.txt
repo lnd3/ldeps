@@ -1,3 +1,4 @@
+cmake_minimum_required (VERSION 3.21.7)
 
 set(USE_SSE True)
 set(USE_AVX True)

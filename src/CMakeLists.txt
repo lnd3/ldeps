@@ -1,3 +1,5 @@
+cmake_minimum_required (VERSION 3.21.7)
+
 if(NOT DEFINED deps_various OR deps_various)
 ############################ Various ############################
 file(GLOB_RECURSE various_inc ${CMAKE_CURRENT_SOURCE_DIR}/various/include/various/*.h)
