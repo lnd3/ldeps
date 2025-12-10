@@ -217,7 +217,7 @@ add_library(keccak STATIC ${keccak_inc} ${keccak_src})
 target_include_directories(keccak PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/keccak)
 set_target_properties(keccak PROPERTIES FOLDER "Deps/thirdparty/keccak")
 
-set_target_properties(keccak PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED YES)
+set_target_properties(keccak PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
 if(MSVC)
 	target_compile_options(keccak PRIVATE /Wall)
 else()
@@ -225,3 +225,35 @@ else()
 endif()
 endif()
 
+
+if(NOT DEFINED deps_secp256k1 OR deps_secp256k1)
+	set(SECP256K1_BUILD_BENCHMARK False)
+	set(SECP256K1_BUILD_TESTS False)
+	set(SECP256K1_BUILD_EXHAUSTIVE_TESTS False)
+	set(SECP256K1_BUILD_CTIME_TESTS False)
+	set(SECP256K1_BUILD_EXAMPLES False)
+
+	add_subdirectory(secp256k1/secp256k1)
+
+	set_target_properties(secp256k1 PROPERTIES FOLDER "Deps/thirdparty/secp256k1")
+	set_target_properties(secp256k1_precomputed PROPERTIES FOLDER "Deps/thirdparty/secp256k1")
+endif()
+
+
+if(NOT DEFINED deps_microecc OR deps_microecc)
+############################ deps_keccak ############################
+file(GLOB_RECURSE microecc_inc ${CMAKE_CURRENT_SOURCE_DIR}/micro-ecc/micro-ecc/*.h)
+file(GLOB_RECURSE microecc_src ${CMAKE_CURRENT_SOURCE_DIR}/micro-ecc/micro-ecc/*.c)
+#SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/micro-ecc/micro-ecc PREFIX microecc FILES ${microecc_inc})
+
+add_library(microecc STATIC ${microecc_inc} ${microecc_src})
+target_include_directories(microecc PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/micro-ecc/micro-ecc)
+set_target_properties(microecc PROPERTIES FOLDER "Deps/thirdparty/microecc")
+
+set_target_properties(microecc PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
+if(MSVC)
+	target_compile_options(microecc PRIVATE /Wall)
+else()
+	target_compile_options(microecc PRIVATE -Werror -Wno-unused-result)
+endif()
+endif()

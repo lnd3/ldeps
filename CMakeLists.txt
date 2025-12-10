@@ -21,6 +21,8 @@ set(deps_ncnn True)
 set(deps_ncnn_examples False)
 set(deps_libtorch True)
 set(deps_keccak True)
+set(deps_secp256k1 True)
+set(deps_microecc True)
 
 
 # deps thirdparty mods
