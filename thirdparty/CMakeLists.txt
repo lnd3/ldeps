@@ -216,7 +216,7 @@ SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/keccak/keccak PREFIX keccak FILES 
 add_library(keccak STATIC ${keccak_inc} ${keccak_src})
 target_include_directories(keccak PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/keccak)
 set_target_properties(keccak PROPERTIES FOLDER "Deps/thirdparty/keccak")
-
+#target_compile_definitions(keccak PRIVATE "memset_s(dest,destsz,ch,count)=memset((dest),(ch),(count))")
 set_target_properties(keccak PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
 if(MSVC)
 	target_compile_options(keccak PRIVATE /Wall) # use /Qspectre for spectre mitigation
@@ -227,6 +227,36 @@ endif()
 
 
 if(NOT DEFINED deps_secp256k1 OR deps_secp256k1)
+############################ deps_keccak ############################
+#set(secp256k1_inc ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/secp256k1/include/secp256k1.h ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/secp256k1/include/secp256k1_recovery.h)
+#set(secp256k1_src ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/secp256k1/src/secp256k1.c)
+#SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/secp256k1 PREFIX secp256k1 FILES ${secp256k1_inc})
+
+#add_library(secp256k1 STATIC ${secp256k1_inc} ${secp256k1_src})
+#target_include_directories(secp256k1 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/secp256k1/secp256k1/include)
+#set_target_properties(secp256k1 PROPERTIES FOLDER "Deps/thirdparty/secp256k1")
+
+#target_compile_definitions(secp256k1 PRIVATE
+#	SECP256K1_BUILD=1
+#	USE_ECMULT_STATIC_PRECOMPUTATION=0
+#    ENABLE_MODULE_RECOVERY=1
+#    DETERMINISTIC=1
+#    USE_FIELD_5X52=1
+#    USE_NUM_NONE=1
+#    USE_SCALAR_4X64=1
+    # Optional but recommended for speed
+#    ECMULT_WINDOW_SIZE=15
+#    ECMULT_GEN_PREC_BITS=4
+#)
+
+#set_target_properties(secp256k1 PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES)
+#if(MSVC)
+#	target_compile_options(secp256k1 PRIVATE /Wall)
+#else()
+#	target_compile_options(secp256k1 PRIVATE -Werror -Wno-unused-result)
+#endif()
+
+
 	set(SECP256K1_BUILD_BENCHMARK False)
 	set(SECP256K1_BUILD_TESTS False)
 	set(SECP256K1_BUILD_EXHAUSTIVE_TESTS False)
@@ -237,6 +267,43 @@ if(NOT DEFINED deps_secp256k1 OR deps_secp256k1)
 
 	set_target_properties(secp256k1 PROPERTIES FOLDER "Deps/thirdparty/secp256k1")
 	set_target_properties(secp256k1_precomputed PROPERTIES FOLDER "Deps/thirdparty/secp256k1")
+
+	#add_custom_command(TARGET secp256k1 POST_BUILD
+    #    #OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/secp256k1.lib"
+    #    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    #        "${CMAKE_CURRENT_BINARY_DIR}/secp256k1/secp256k1/lib/$<CONFIG>/libsecp256k1.lib"
+    #        #"${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/secp256k1.lib"
+    #        "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/secp256k1.lib"
+	#	VERBATIM
+    #)
+
+	set(SRC_LIB libsecp256k1)
+	set(DST_LIB secp256k1)
+	set(SRC_DIR "${CMAKE_CURRENT_BINARY_DIR}/${DST_LIB}/${DST_LIB}/lib/$<CONFIG>/${SRC_LIB}.lib")
+	set(DST_DIR "${CMAKE_CURRENT_BINARY_DIR}/${DST_LIB}/${DST_LIB}/lib/$<CONFIG>/${DST_LIB}.lib")
+	message("copy ${SRC_DIR}")
+	add_custom_target(copy_${DST_LIB}
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+			${SRC_DIR}
+			${DST_DIR}
+		DEPENDS ${DST_LIB}
+		COMMENT "Copying ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/${DST_LIB}.lib"
+	)
+	set_target_properties(copy_${DST_LIB} PROPERTIES FOLDER "Deps/thirdparty/secp256k1")
+
+	target_compile_definitions(secp256k1 PRIVATE 
+		ENABLE_MODULE_RECOVERY=1
+		DETERMINISTIC=1
+		USE_FIELD_5X52=1
+		USE_NUM_NONE=1
+		USE_SCALAR_4X64=1
+		# Optional but recommended for speed
+		ECMULT_WINDOW_SIZE=15
+		ECMULT_GEN_PREC_BITS=4
+	)
+	set_target_properties(secp256k1 PROPERTIES 
+		INTERFACE_COMPILE_DEFINITIONS "ENABLE_MODULE_RECOVERY=1"
+	)
 endif()
 
 
