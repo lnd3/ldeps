@@ -1,7 +1,7 @@
 # ldeps project
 
 ## What This Is
-`ldeps` is a collection of thirdparty c++ libraries.
+`ldeps` is a collection of thirdparty C++ libraries.
 
 ## Content
 - **bs**: Package `bs`. Location `deps/ldeps/thirdparty/bs`. Main build system for cmake. Provides a structured layer on top of cmake to simplify project management and dependencies.
@@ -10,6 +10,8 @@
 - **PortAudio**: Package `portaudio`. Location `deps/ldeps/thirdparty/portaudio/portaudio`. Audio library.
 - **pthreads**: Package `pthreads`. Location `deps/ldeps/src/pthreads`.
 - **various**: Package `various`. Location `deps/ldeps/src/various`. For example a tiny generalized serializer `serializer/Serializer.h` and a very efficient and easy-to-use json parser `jsmn.h`.
+- **jsonxx**: Package `jsonxx`. Location `deps/ldeps/thirdparty/jsonxx/jsonxx`. JSON parsing library used by the serialization layer.
+- **pugixml**: Package `pugixml`. Location `deps/ldeps/thirdparty_mods/pugixml/pugixml`. XML parsing library.
 
 ### Machine Learning Libraries
 - **PyTorch C++**: Packages `libtorch_wrapper` and `libtorch_download`. Location `deps/ldeps/thirdparty/libtorch_wrapper`. Download once then use the wrapper. PyTorch C++ is an advanced machine learning library.
@@ -24,6 +26,7 @@
 - **ed25519**: Package `ed25519`. Location `deps/ldeps/thirdparty/ed25519/ed25519`.
 - **secp256k1**: Package `secp256k1`. Location `deps/ldeps/thirdparty/secp256k1/secp256k1`.
 - **micro-ecc**: Package `micro-ecc`. Location `deps/ldeps/thirdparty/micro-ecc/micro-ecc`.
+- **keccak**: Package `keccak`. Location `deps/ldeps/thirdparty/keccak/keccak`. Cryptographic hashing.
 
 ### Graphics Libraries
 - **glad**: Package `glad`. Location `deps/ldeps/src/glad`.
@@ -31,4 +34,5 @@
 - **glfw**: Package `glfw`. Location `deps/ldeps/thirdparty_mods/glfw`.
 - **imgui**: Package `imgui`. Location `deps/ldeps/thirdparty_mods/imgui/imgui`.
 - **implot**: Package `implot`. Location `deps/ldeps/thirdparty_mods/implot/implot`.
-
+- **openfbx**: Package `openfbx`. Location `deps/ldeps/thirdparty_mods/openfbx/openfbx`. FBX file format library.
+- **ufbx**: Package `ufbx`. Location `deps/ldeps/thirdparty_mods/ufbx/ufbx`. FBX file format library.
