@@ -4,6 +4,7 @@ set(USE_CUDA OFF CACHE BOOL "Disable CUDA for CPU-only build")
 
 file(GLOB darknet_inc ${CMAKE_CURRENT_SOURCE_DIR}/darknet/include/*.h)
 file(GLOB darknet_src ${CMAKE_CURRENT_SOURCE_DIR}/darknet/src/*.*)
+list(FILTER darknet_src EXCLUDE REGEX "compare\\.c$")
 SOURCE_GROUP(TREE ${CMAKE_CURRENT_SOURCE_DIR}/darknet/include PREFIX darknet FILES ${darknet_inc})
 
 add_library(darknet STATIC ${darknet_inc} ${darknet_src})
