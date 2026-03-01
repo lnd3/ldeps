@@ -57,7 +57,7 @@
 	url = git@github.com:Tencent/ncnn.git
 [submodule "thirdparty/keccak/keccak"]
 	path = thirdparty/keccak/keccak
-	url = git@github.com:coruus/keccak-tiny.git
+	url = git@github.com:lnd3/keccak-tiny.git
 [submodule "thirdparty/secp256k1/secp256k1"]
 	path = thirdparty/secp256k1/secp256k1
 	url = git@github.com:bitcoin-core/secp256k1.git
