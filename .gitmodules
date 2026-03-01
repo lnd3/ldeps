@@ -45,7 +45,7 @@
 	url = git@github.com:lnd3/tiny-dnn.git
 [submodule "thirdparty/darknet/darknet"]
 	path = thirdparty/darknet/darknet
-	url = git@github.com:pjreddie/darknet.git
+	url = git@github.com:lnd3/darknet.git
 [submodule "thirdparty/fann/fann"]
 	path = thirdparty/fann/fann
 	url = git@github.com:lnd3/fann.git
